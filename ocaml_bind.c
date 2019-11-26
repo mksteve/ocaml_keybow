@@ -100,3 +100,12 @@ CAMLprim value keybow_keypress()
   }
   CAMLreturn ( Val_unit);
 }
+
+keybow_key get_key(unsigned short index){
+    keybow_key key;
+    index *= 3;
+    key.gpio_bcm = mapping_table[index + 0];
+    key.hid_code = mapping_table[index + 1];
+    key.led_index = mapping_table[index + 2];
+    return key;
+}
