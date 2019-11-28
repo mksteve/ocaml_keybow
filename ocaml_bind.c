@@ -30,14 +30,14 @@ int initGPIO() {
 CAMLprim value keybow_display( value led_values, value num_leds )
 {
   CAMLparam2( led_values, num_leds );
-
+  int remap[] = {0,4,8,1,5,9,2,6,10,3,7,11};
   for( size_t i = 0; i < (size_t)Int_val(num_leds); i++ ){
     value led_x = Field( led_values, i );
     value r = Field( led_x, 0 );
     value g = Field( led_x, 1 );
     value b = Field( led_x, 2 );
-    lights_setPixel(i, Int_val(r), Int_val(g), Int_val(b) );
-    //    printf( " RGB %d = (%d,%d,%d)\n",i, Int_val(r), Int_val(g), Int_val(b) );
+    lights_setPixel(remap[i], Int_val(r), Int_val(g), Int_val(b) );
+    printf( " RGB %d = (%d,%d,%d)\n",i, Int_val(r), Int_val(g), Int_val(b) );
     lights_show();
     
   }
@@ -46,19 +46,19 @@ CAMLprim value keybow_display( value led_values, value num_leds )
 CAMLprim value keybow_init( value un )
 {
   CAMLparam1( un );
+  add_key(RPI_V2_GPIO_P1_11, 0x27, 3);
+  add_key(RPI_V2_GPIO_P1_13, 0x37, 7);
+  add_key(RPI_V2_GPIO_P1_16, 0x28, 11);
+  add_key(RPI_V2_GPIO_P1_15, 0x1e, 2);
+  add_key(RPI_V2_GPIO_P1_18, 0x1f, 6);
+  add_key(RPI_V2_GPIO_P1_29, 0x20, 10);
+  add_key(RPI_V2_GPIO_P1_31, 0x21, 1);
+  add_key(RPI_V2_GPIO_P1_32, 0x22, 5);
+  add_key(RPI_V2_GPIO_P1_33, 0x23, 9);
+  add_key(RPI_V2_GPIO_P1_38, 0x24, 0);
+  add_key(RPI_V2_GPIO_P1_36, 0x25, 4);
+  add_key(RPI_V2_GPIO_P1_37, 0x26, 8);
   initGPIO();
-    add_key(RPI_V2_GPIO_P1_11, 0x27, 3);
-    add_key(RPI_V2_GPIO_P1_13, 0x37, 7);
-    add_key(RPI_V2_GPIO_P1_16, 0x28, 11);
-    add_key(RPI_V2_GPIO_P1_15, 0x1e, 2);
-    add_key(RPI_V2_GPIO_P1_18, 0x1f, 6);
-    add_key(RPI_V2_GPIO_P1_29, 0x20, 10);
-    add_key(RPI_V2_GPIO_P1_31, 0x21, 1);
-    add_key(RPI_V2_GPIO_P1_32, 0x22, 5);
-    add_key(RPI_V2_GPIO_P1_33, 0x23, 9);
-    add_key(RPI_V2_GPIO_P1_38, 0x24, 0);
-    add_key(RPI_V2_GPIO_P1_36, 0x25, 4);
-    add_key(RPI_V2_GPIO_P1_37, 0x26, 8);
 
 
   
@@ -67,8 +67,8 @@ CAMLprim value keybow_init( value un )
 CAMLprim value keybow_term( value un)
 {
   CAMLparam1( un );
-  bcm2835_close();
   lights_cleanup();
+  bcm2835_close();
   CAMLreturn( Val_unit );  
 }
 
@@ -88,6 +88,7 @@ CAMLprim value keybow_keypress()
     for(x = 0; x < NUM_KEYS; x++){
       keybow_key key = get_key(x);
       int state = bcm2835_gpio_lev(key.gpio_bcm) == 0;
+      //      printf( "Key %d gpio %d state %d led = %d\n", x, key.gpio_bcm, state, key.led_index );
       if(state != last_state[x]){
 	last_state[x] = state;
 	if( state == 1 ) {
