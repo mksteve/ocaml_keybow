@@ -1,6 +1,8 @@
 module type Game = sig
     type t
     
+    type transformation
+    
     val compare: t -> t -> int
     
     val moves: t -> t list
@@ -14,11 +16,11 @@ module type Game = sig
     
     val prettyPrint: t -> unit
     
-(*    val move: int -> t -> t
+(*    val move: int -> t -> t*)
     
-    val transformed: t -> (t*int) list
+    val transformed: t -> t*transformation
     
-    val invtransform: t -> int -> t*)
+    val invtransform: tranformation -> t -> t
 end
 
 module type Solver = sig

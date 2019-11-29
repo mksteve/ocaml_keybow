@@ -89,7 +89,7 @@ let permutateBoards state permutation:(t*int) list=
     let permutateBoard board state=
         permutateBoardReflections state board
       |>List.init 12 in
-    let boardPermutations:(t*int)list ref=ref [] in
+    let boardPermutations:(t*int)list ref=ref [newBoard,0] in
     for i=0 to boards-1 do
         boardPermutations := List.concat (List.map (permutateBoard i) !boardPermutations)
     done;
