@@ -65,7 +65,7 @@ let moves state =
 let permutateBoardReflections (state,pNumber) board number :(t*int) =
     let tempBoard = Array.make 9 false in
     for i=0 to 8 do 
-        tempBoard.(transformationsxy.(number mod 4).(i)) <- state.(i+boards*9)
+        tempBoard.(transformationsxy.(number mod 4).(i)) <- state.(i+(boards-1)*9)
     done;
     let newBoard = Array.copy state in
     for i=0 to 8 do
