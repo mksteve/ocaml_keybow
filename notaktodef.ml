@@ -69,7 +69,7 @@ let permutateBoardReflections (state,pNumber) board number :(t*int) =
     done;
     let newBoard = Array.copy state in
     for i=0 to 8 do
-        newBoard.(transformationsrot.(number / 4).(i)+boards*9) <- tempBoard.(i)
+        newBoard.(transformationsrot.(number / 4).(i)+(boards-1)*9) <- tempBoard.(i)
     done;
     (newBoard,pNumber*12+number)
 
