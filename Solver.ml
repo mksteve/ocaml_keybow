@@ -1,6 +1,8 @@
 module type Game = sig
     type t
     
+    type transformation
+    
     val compare: t -> t -> int
     
     val moves: t -> t list
@@ -14,11 +16,11 @@ module type Game = sig
     
     val prettyPrint: t -> unit
     
-(*    val move: int -> t -> t
+(*    val move: int -> t -> t*)
     
-    val transformed: t -> (t*int) list
+    val transformed: t -> (t*transformation)
     
-    val invtransform: t -> int -> t*)
+    val invtransform: transformation -> t -> t
 end
 
 module type Solver = sig
@@ -89,6 +91,7 @@ module Make(Game:Game):Solver with type state = Game.t = struct
         done
     
     let makeMove state =
+        let state, transformation = Game.tranformed state in
         let init::moves = StateMap.find state !states in
-        List.fold_left (fun a b -> if snd a > snd b then a else b) init moves |> fst
+        List.fold_left (fun a b -> if snd a > snd b then a else b) init moves |> fst |> Game.invtransform transformation
 end
