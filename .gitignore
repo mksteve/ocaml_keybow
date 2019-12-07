@@ -3,3 +3,4 @@
 *.cmo
 *.cmi
 a.out
+.depend
