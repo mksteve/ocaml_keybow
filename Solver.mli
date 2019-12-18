@@ -20,7 +20,7 @@ module type Game = sig
     
     val transformed: t -> t*transformation
     
-    val invtransform: tranformation -> t -> t
+    val invtransform: transformation -> t -> t
 end
 
 module type Solver = sig

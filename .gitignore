@@ -4,3 +4,5 @@
 *.cmi
 a.out
 .depend
+*.byte
+_build/*

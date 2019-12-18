@@ -91,7 +91,7 @@ module Make(Game:Game):Solver with type state = Game.t = struct
         done
     
     let makeMove state =
-        let state, transformation = Game.tranformed state in
+        let state, transformation = Game.transformed state in
         let init::moves = StateMap.find state !states in
         List.fold_left (fun a b -> if snd a > snd b then a else b) init moves |> fst |> Game.invtransform transformation
 end

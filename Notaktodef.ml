@@ -1,6 +1,6 @@
 type t = bool array
 
-type transformation = int
+type transformation = unit
 
 let boards=1
 
@@ -62,7 +62,7 @@ let moves state =
           | false -> let nstate = Array.copy state in
                 nstate.(move) <- true;Some nstate)
 
-let permutateBoardReflections (state,pNumber) board number :(t*int) =
+(*let permutateBoardReflections (state,pNumber) board number :(t*int) =
     let tempBoard = Array.make 9 false in
     for i=0 to 8 do 
         tempBoard.(transformationsxy.(number mod 4).(i)) <- state.(i+(boards-1)*9)
@@ -93,15 +93,19 @@ let permutateBoards state permutation:(t*int) list=
     for i=0 to boards-1 do
         boardPermutations := List.concat (List.map (permutateBoard i) !boardPermutations)
     done;
-    !boardPermutations
+    !boardPermutations*)
 
-let transformed state=
+(*let transformed state=
     List.init fact (permutateBoards state)
     |> List.concat
     |> List.fast_sort (fun a b -> compare (snd a) (snd b))
     |> List.hd
 let invtransform state =
-    ()
+    ()*)
+
+let transformed state = state , ()
+
+let invtransform () state = state
 
 let revmoves state =
     let moves = ref [] in

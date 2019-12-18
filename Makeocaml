@@ -1,7 +1,7 @@
 OCAMLC = ocamlc
 OCAMLOPT = ocamlopt
 OCAMLDEP = ocamldep
-INCLUDES = -I ~/keybow-firmware/bcm2835-1.58/src/
+#INCLUDES = -I ~/keybow-firmware/bcm2835-1.58/src/
 OCAMLFLAGS = -custom $(INCLUDES)
 
 .SUFFIXES: .ml .mli .cmo .cmi .cmx
@@ -15,6 +15,9 @@ OCAMLFLAGS = -custom $(INCLUDES)
 .ml.cmx:
 	echo "test"
 	$(OCAMLOPT) $(OCAMLFLAGS) -c $<
+
+.DEFAULT: $(FILE)
+	$(OCAMLC) $(OCAMLFLAGS) $^
 
 .depend:
 	$(OCAMLDEP) $(INCLUDES) *.mli *.ml > .depend
