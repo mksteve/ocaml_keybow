@@ -6,3 +6,7 @@ a.out
 .depend
 *.byte
 _build/*
+keybow-firmware/**
+*.native
+*.so
+*.a

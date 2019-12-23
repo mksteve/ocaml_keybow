@@ -10,6 +10,7 @@
 
 int key_index = 0;
 void add_key(unsigned short gpio_bcm, unsigned short hid_code, unsigned short led_index);
+keybow_key get_key(unsigned short index);
 
 int initGPIO() {
     if (!bcm2835_init()){
